@@ -95,6 +95,7 @@ public class LauncherSettingPage extends FCLCommonPage implements View.OnClickLi
     private FCLSpinner<String> downloadType;
     private FCLCheckBox autoThreads;
     private FCLNumberSeekBar threads;
+    private FCLButton launchHaiko;
 
     public LauncherSettingPage(Context context, int id, FCLUILayout parent, int resId) {
         super(context, id, parent, resId);
@@ -131,6 +132,7 @@ public class LauncherSettingPage extends FCLCommonPage implements View.OnClickLi
         downloadType = findViewById(R.id.source);
         autoThreads = findViewById(R.id.check_auto_threads);
         threads = findViewById(R.id.threads);
+        launchHaiko = findViewById(R.id.launch_haiko);
 
         checkUpdate.setOnClickListener(this);
         clearCache.setOnClickListener(this);
@@ -149,6 +151,7 @@ public class LauncherSettingPage extends FCLCommonPage implements View.OnClickLi
         resetDkBackground.setOnClickListener(this);
         resetCursor.setOnClickListener(this);
         resetMenuIcon.setOnClickListener(this);
+        launchHaiko.setOnClickListener(this);
 
         theme.setSelected(true);
         theme2.setSelected(true);
@@ -472,6 +475,10 @@ public class LauncherSettingPage extends FCLCommonPage implements View.OnClickLi
         if (v == resetMenuIcon) {
             new File(FCLPath.FILES_DIR, "menu_icon.png").delete();
             new File(FCLPath.FILES_DIR, "menu_icon.gif").delete();
+        }
+        if (v == launchHaiko) {
+            // Lancer l'interface Haiko
+            MainActivity.getInstance().launchHaikoInterface();
         }
     }
 

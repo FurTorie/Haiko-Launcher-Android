@@ -678,4 +678,12 @@ class MainActivity : FCLActivity(), OnSelectListener, View.OnClickListener {
             permissionResultLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
+    
+    /**
+     * Lance l'interface Haiko Web dans une WebView
+     */
+    fun launchHaikoInterface() {
+        val intent = Intent(this, HaikoWebActivity::class.java)
+        startActivity(intent)
+    }
 }

@@ -96,6 +96,11 @@
             android:name="com.tungsten.fcllibrary.crash.CrashReportActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation"
             android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name=".activity.HaikoWebActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation"
+            android:screenOrientation="sensorLandscape"
+            android:label="Haiko Launcher" />
 
         <service
             android:name="com.tungsten.fclcore.download.ProcessService"

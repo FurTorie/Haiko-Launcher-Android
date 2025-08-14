@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" href="assets/css/launcher.css">
+        <style>
+            /* Styles spécifiques Android */
+            .android-launcher-panel {
+                padding: 20px;
+                text-align: center;
+                color: white;
+            }
+            .android-launcher-panel h1 {
+                margin-bottom: 20px;
+                font-size: 24px;
+            }
+            .panel-buttons {
+                margin-top: 30px;
+            }
+            .panel-buttons button {
+                margin: 10px;
+                padding: 15px 25px;
+                background: rgba(255,255,255,0.1);
+                border: 2px solid rgba(255,255,255,0.3);
+                border-radius: 8px;
+                color: white;
+                font-size: 16px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            .panel-buttons button:hover {
+                background: rgba(255,255,255,0.2);
+                border-color: rgba(255,255,255,0.5);
+            }
+        </style>
+    </head>
+    <body class="dfvf">
+        <div class="dragbar"></div>
+        <div class="frame">
+            <div id="minimize" class="button-frame icon-minimize"></div>
+            <div id="maximize" class="button-frame icon-maximize"></div>
+            <div id="close" class="button-frame icon-close"></div>
+        </div>
+
+        <div class="popup">
+            <div class="popup-tab">
+                <div class="popup-title"></div>
+                <div class="popup-content"></div>
+                <div class="popup-options">
+                    <button class="popup-button">OK</button>
+                </div>
+            </div>
+        </div>
+        <div class="panels"></div>
+        <script src="assets/js/launcher-android.js"></script>
+    </body>
+</html>

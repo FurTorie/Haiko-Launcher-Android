@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        .global {
+            --element-color: #00bd7a;
+            --transition: all 0.5s cubic-bezier(1, 0.46, 0, 1.29);
+            --dark-color: #292929;
+            --light-color: rgb(245, 245, 245);
+        }
+
+        .dark {
+            --color: #F5F5F5;
+            --background: #292929;
+            --background-element: #424242;
+            --background-transparent: #2c2c2ccc;
+            --shadow: rgba(25, 25, 25, 0.7);
+            --svg-color: brightness(0) saturate(100%) invert(100%) sepia(55%) saturate(23%) hue-rotate(236deg) brightness(108%) contrast(92%);
+        }
+
+        .light {
+            --color: #151515;
+            --background: rgb(245, 245, 245);
+            --background-element: #c2c2c2;
+            --background-transparent: rgba(204, 204, 204, 0.8);
+            --shadow: rgba(208, 208, 208, 0.7);
+            --svg-color: brightness(0) saturate(100%) invert(0%) sepia(5%) saturate(1719%) hue-rotate(357deg) brightness(94%) contrast(84%);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            color: var(--color);
+            font-family: 'Poppins', Arial, sans-serif;
+            font-weight: normal;
+            background-color: var(--background);
+            height: 100vh;
+            overflow: hidden;
+            font-size: 14px;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(135deg, #2c2c2c 0%, #1f1f1f 100%);
+            color: #ffffff;
+            overflow: hidden;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 80px);
+        }
+
+        .left-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin-right: 150px;
+        }
+
+        /* Status Server */
+        .status-server {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            margin: 8px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .server-status-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            margin-right: 8px;
+        }
+
+        .server-status-infos {
+            flex: 1;
+        }
+
+        .server-status-name {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .server-status-text {
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
+        .status-player-count {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 6px 10px;
+            text-align: center;
+            min-width: 40px;
+        }
+
+        .player-count {
+            font-size: 14px;
+            font-weight: bold;
+            color: #00bd7a;
+        }
+
+        /* Home Bottom */
+        .home-bottom {
+            display: flex;
+            flex: 1;
+            margin: 0 8px 8px 8px;
+            gap: 8px;
+        }
+
+        .new-tab {
+            flex: 3;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .titre-tab-new {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            border-bottom: 2px solid #00bd7a;
+            padding-bottom: 4px;
+        }
+
+        .news-list {
+            height: calc(100% - 40px);
+            overflow-y: auto;
+        }
+
+        .news-block {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-left: 3px solid #00bd7a;
+        }
+
+        .news-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .news-header img {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+
+        .header-text .title {
+            font-weight: 600;
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+        .date {
+            margin-left: auto;
+            text-align: center;
+            opacity: 0.7;
+            font-size: 10px;
+        }
+
+        .news-content {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.3;
+            font-size: 11px;
+        }
+
+        /* Social Tab */
+        .social-tab {
+            flex: 0.6;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            height: 100%;
+        }
+
+        .social-block {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            flex: 1;
+        }
+
+        .social-block:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .icon-social {
+            width: 24px;
+            height: 24px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .icon-discord {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/></svg>');
+        }
+
+        .icon-github {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387c.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416c-.546-1.387-1.333-1.756-1.333-1.756c-1.089-.745.083-.729.083-.729c1.205.084 1.839 1.237 1.839 1.237c1.07 1.834 2.807 1.304 3.492.997c.107-.775.418-1.305.762-1.604c-2.665-.305-5.467-1.334-5.467-5.931c0-1.311.469-2.381 1.236-3.221c-.124-.303-.535-1.524.117-3.176c0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404c2.291-1.552 3.297-1.23 3.297-1.23c.653 1.653.242 2.874.118 3.176c.77.84 1.235 1.911 1.235 3.221c0 4.609-2.807 5.624-5.479 5.921c.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.300 24 12c0-6.627-5.373-12-12-12z"/></svg>');
+        }
+
+        .icon-youtube {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>');
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            right: 8px;
+            top: 8px;
+            bottom: 8px;
+            width: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .player-options {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .player-head {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            margin: 0 auto;
+        }
+
+        .play-elements {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .play-instance {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .play-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #00bd7a, #00a86b);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 10px;
+        }
+
+        .play-btn:hover {
+            background: linear-gradient(135deg, #00a86b, #00bd7a);
+            transform: translateY(-1px);
+        }
+
+        .play-text {
+            font-size: 12px;
+        }
+
+        .instance-name {
+            font-size: 9px;
+            opacity: 0.8;
+        }
+
+        .instance-select {
+            width: 25px;
+            height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-arrow::after {
+            content: '▼';
+            color: white;
+            font-size: 8px;
+        }
+
+        .info-starting-game {
+            display: none;
+            text-align: center;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            margin-top: 8px;
+        }
+
+        .settings-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .icon-settings::after {
+            content: '⚙️';
+            font-size: 14px;
+        }
+
+        /* Instance Popup */
+        .instance-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .instances-tab {
+            background: rgba(44, 44, 44, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+        }
+
+        .icon-close::after {
+            content: '✕';
+        }
+
+        .instances-List {
+            margin-top: 20px;
+        }
+
+        .instance-elements {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .instance-elements:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .active-instance {
+            background: rgba(0, 189, 122, 0.3);
+        }
+
+        /* Scrollbar */
+        .content-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .content-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .content-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .content-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="dark">
+
+<div class="container">
+    <div class="status-server">
+        <img class="server-status-icon" src="../assets/images/icon.png">
+        <div class="server-status-infos">
+            <div class="server-status-name">Minecraft</div>
+            <div class="server-status-text">operationeel - 0 ms</div>
+        </div>
+        <div class="status-player-count">
+            <div class="player-count">0</div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="left-content">
+            <div class="home-bottom">
+                <div class="new-tab">
+                    <div class="titre-tab-new">Actualités</div>
+                    <div class="news-list content-scroll"></div>
+                </div>
+                <div class="social-tab">
+                    <div class="social-list content-scroll">
+                        <div data-url="https://discord.gg/PAD8QrYnpP" class="social-block">
+                            <div class="icon-discord icon-social"></div>
+                        </div>
+
+                        <div data-url="https://github.com/FurTorie" class="social-block">
+                            <div class="icon-github icon-social"></div>
+                        </div>
+
+                        <div data-url="https://www.youtube.com/@doriancarrierelive" class="social-block">
+                            <div class="icon-youtube icon-social"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="player-options">
+            <div class="player-head"></div>
+        </div>
+
+        <div class="play-elements">
+            <div class="play-instance">
+                <button class="play-btn">
+                    <span class="play-text">Jouer</span>
+                    <span class="instance-name">Accueil</span>
+                </button>
+                <div class="instance-select icon-arrow"></div>
+            </div>
+            <div class="info-starting-game">
+                <div class="info-starting-game-text">Connexion...</div>
+                <progress value="0" max="0" class="progress-bar"></progress>
+            </div>
+        </div>
+
+        <div class="settings-btn icon-settings"></div>
+    </div>
+
+    <div class="instance-popup">
+        <div class="instances-tab">
+            <div class="close-popup icon-close"></div>
+            <p>Choisissez votre instance...</p>
+            <div class="instances-List"></div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/js/electron-polyfill.js"></script>
+<script src="../assets/js/panels/home.js"></script>
+</body>
+</html>
